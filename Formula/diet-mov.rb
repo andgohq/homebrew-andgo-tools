@@ -2,9 +2,9 @@ class DietMov < Formula
   version "1.1.9"
   desc "Tools for small things"
   homepage ""
-  url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/v1.1.8.tar.gz"
+  url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/v1.1.9.tar.gz"
   # shasum -a 256 $FILE
-  sha256 "bdc3b3f30711c74c60c86f4c181581d56264a39434a7bf03daed48456ca22859"
+  sha256 "e243ded3ccbe23cb75a24b753b58b06831e1ca5fa7f31877c2b4eefbffa98b83"
   license "MIT"
 
   depends_on "ffmpeg"

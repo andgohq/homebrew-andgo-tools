@@ -82,9 +82,11 @@ diet-mov /path/to/videos 10    # Convert with 10 fps
 
    # Update the Formula with new SHA256
    # Open Formula/diet-mov.rb and manually update these lines:
+   # 1. Update the url to the new tar.gz file
    # 2. Update the sha256 to the new hash value
    #
    # Example:
+   # url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/1.1.0.tar.gz"
    # sha256 "9fc5963..."  # Change from old to new hash
 
    # Clean up

@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.4"
+VERSION="1.1.5"
 FORCE=0
+ERROR_COUNT=0
 
 # Show version
 if [ "$1" = "-v" ] || [ "$1" = "--version" ]; then
@@ -39,8 +40,18 @@ if ! find "$directory" -type f -name "*.mov" -print -quit | grep -q .; then
   exit 1
 fi
 
+# Store target files in an array
+mapfile -t target_files < <(find "$directory" -type f -name "*.mov")
+
+# Display target files
+echo "Found ${#target_files[@]} MOV file(s):"
+for mov_file in "${target_files[@]}"; do
+  echo "  - $mov_file"
+done
+echo
+
 # Process each MOV file, handling spaces in filenames correctly
-while IFS= read -r mov_file; do
+for mov_file in "${target_files[@]}"; do
   output_file="${mov_file%.mov}.gif"
 
   # Check if output file exists and handle accordingly
@@ -49,9 +60,19 @@ while IFS= read -r mov_file; do
     continue
   fi
 
+  echo "Processing: $mov_file"
   # Convert to animated GIF with specified frame rate
-  ffmpeg -y -loglevel error -i "$mov_file" -vf "fps=$fps" -f gif "$output_file"
-  echo "Conversion completed: $mov_file → $output_file (fps: $fps)"
-done < <(find "$directory" -type f -name "*.mov")
+  if ffmpeg -y -loglevel error -i "$mov_file" -vf "fps=$fps" -f gif "$output_file"; then
+    echo "Conversion completed: $mov_file → $output_file (fps: $fps)"
+  else
+    echo "Error: Failed to convert $mov_file"
+    ERROR_COUNT=$((ERROR_COUNT + 1))
+  fi
+done
 
-echo "All MOV files have been converted to animated GIF successfully with $fps fps."
+if [ $ERROR_COUNT -eq 0 ]; then
+  echo "All MOV files have been converted to animated GIF successfully with $fps fps."
+else
+  echo "Conversion completed with $ERROR_COUNT error(s)."
+  exit 1
+fi

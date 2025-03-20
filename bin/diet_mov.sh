@@ -11,18 +11,18 @@ fi
 directory="$1"
 fps="${2:-2}"  # Use second argument if provided, otherwise default to 2
 
-mov_files=$(find "$directory" -type f -name "*.mov")
-
-if [ -z "$mov_files" ]; then
-  echo "No mov files found."
+# Check if any MOV files exist
+if ! find "$directory" -type f -name "*.mov" -print -quit | grep -q .; then
+  echo "No MOV files found."
   exit 1
 fi
 
-for mov_file in $mov_files; do
+# Process each MOV file, handling spaces in filenames correctly
+find "$directory" -type f -name "*.mov" -print0 | while IFS= read -r -d '' mov_file; do
   output_file="${mov_file%.mov}.gif"
-  # Convert to animated PNG with specified frame rate
-  ffmpeg -i "$mov_file" -vf "fps=$fps" -f gif "$output_file"
+  # Convert to animated GIF with specified frame rate
+  ffmpeg -loglevel error -i "$mov_file" -vf "fps=$fps" -f gif "$output_file"
   echo "Conversion completed: $mov_file → $output_file (fps: $fps)"
 done
 
-echo "All mov files have been converted to animated GIF successfully with $fps fps."
+echo "All MOV files have been converted to animated GIF successfully with $fps fps."

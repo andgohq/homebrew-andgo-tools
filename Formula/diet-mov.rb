@@ -1,4 +1,5 @@
 class DietMov < Formula
+  version "1.1.1"
   desc "Tools for small things"
   homepage ""
   url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/1.1.0.tar.gz"

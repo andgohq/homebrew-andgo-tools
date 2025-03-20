@@ -12,7 +12,7 @@ brew tap andgohq/homebrew-tools
 
 ### diet-mov
 
-A tool to convert MOV files to animated PNG format with customizable frame rate.
+A tool to convert MOV files to animated GIF format with customizable frame rate.
 
 ```bash
 brew install diet-mov
@@ -26,14 +26,13 @@ diet-mov <directory> [fps]
 
 **Arguments:**
 - `directory`: Directory containing MOV files to convert
-- `fps`: Frame rate for the output animated PNG (default: 2)
+- `fps`: Frame rate for the output animated GIF (default: 2)
 
 **Examples:**
 ```bash
-diet-mov .
-diet-mov ./videos 2
-diet-mov ./videos 5
-diet-mov /path/to/videos 10
+diet-mov ./videos              # Convert with default 2 fps
+diet-mov ./videos 5            # Convert with 5 fps
+diet-mov /path/to/videos 10    # Convert with 10 fps
 ```
 
 ## Requirements
@@ -41,6 +40,75 @@ diet-mov /path/to/videos 10
 - macOS
 - Homebrew
 - ffmpeg (automatically installed as a dependency)
+
+## Development
+
+### Project Structure
+
+```
+.
+├── Formula/           # Homebrew formula files
+├── bin/              # Shell scripts
+└── README.md         # This file
+```
+
+### Updating Formula
+
+1. Update the version in `Formula/diet-mov.rb`:
+   ```ruby
+   version "1.1.0"  # Update this version number
+   ```
+
+2. Create a new tag and push it:
+   ```bash
+   git tag -a v1.1.0 -m "Release v1.1.0"  # Use the same version number
+   git push origin v1.1.0
+   ```
+
+3. Create a new GitHub Release:
+   - Go to GitHub repository
+   - Click "Releases" → "Create a new release"
+   - Choose the tag you just created (e.g., v1.1.0)
+   - Add release notes
+   - Click "Publish release"
+
+4. Download the generated tar.gz and update the Formula:
+   ```bash
+   # Download the tar.gz file
+   curl -L https://github.com/andgohq/homebrew-tools/archive/refs/tags/v1.1.0.tar.gz -o v1.1.0.tar.gz
+
+   # Calculate SHA256
+   sha256=$(shasum -a 256 v1.1.0.tar.gz | cut -d' ' -f1)
+
+   # Update the Formula with new version and SHA256
+   sed -i '' "s/version \".*\"/version \"1.1.0\"/" Formula/diet-mov.rb
+   sed -i '' "s/sha256 \".*\"/sha256 \"$sha256\"/" Formula/diet-mov.rb
+
+   # Clean up
+   rm v1.1.0.tar.gz
+   ```
+
+5. Update the formula:
+   ```bash
+   brew bump-formula-pr --version=1.1.0 diet-mov
+   ```
+
+### Testing Changes
+
+1. Install the formula locally:
+   ```bash
+   brew install --build-from-source Formula/diet-mov.rb
+   ```
+
+2. Test the changes:
+   ```bash
+   diet-mov ./test-videos
+   ```
+
+3. Uninstall after testing:
+   ```bash
+   brew uninstall diet-mov
+   ```
 
 ## Contributing
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.5"
+VERSION="1.1.6"
 FORCE=0
 ERROR_COUNT=0
 
@@ -40,18 +40,15 @@ if ! find "$directory" -type f -name "*.mov" -print -quit | grep -q .; then
   exit 1
 fi
 
-# Store target files in an array
-mapfile -t target_files < <(find "$directory" -type f -name "*.mov")
-
-# Display target files
-echo "Found ${#target_files[@]} MOV file(s):"
-for mov_file in "${target_files[@]}"; do
+# Count and display target files
+echo "Found MOV files:"
+find "$directory" -type f -name "*.mov" | while read -r mov_file; do
   echo "  - $mov_file"
 done
 echo
 
 # Process each MOV file, handling spaces in filenames correctly
-for mov_file in "${target_files[@]}"; do
+find "$directory" -type f -name "*.mov" | while read -r mov_file; do
   output_file="${mov_file%.mov}.gif"
 
   # Check if output file exists and handle accordingly

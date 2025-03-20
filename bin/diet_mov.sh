@@ -1,8 +1,17 @@
 #!/bin/bash
 set -e
 
+VERSION="1.1.2"
+
+# Show version
+if [ "$1" = "-v" ] || [ "$1" = "--version" ]; then
+  echo "diet-mov version $VERSION"
+  exit 0
+fi
+
 if [ "$#" -lt 1 ]; then
   echo "Usage: $0 <directory> [fps]"
+  echo "       $0 -v, --version    Show version"
   echo "Example: $0 /path/to/videos 2"
   echo "Default fps: 2"
   exit 1

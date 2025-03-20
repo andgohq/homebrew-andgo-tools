@@ -1,8 +1,9 @@
 class ConvertMovToPng < Formula
   desc "Tools for small things"
   homepage ""
-  url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/1.0.0.tar.gz"
-  sha256 "27f29787219fe78cf03eec959e64626166adb56c6699a945cbe0e076269a7ddd"
+  url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/1.0.1.tar.gz"
+  # shasum -a 256 $FILE
+  sha256 "ef93face8278cc83a998de482410c49191c7a3ea5c9c9e9d06b7bb180e487196"
   license "MIT"
 
   depends_on "ffmpeg"

@@ -78,20 +78,19 @@ diet-mov /path/to/videos 10    # Convert with 10 fps
    curl -L https://github.com/andgohq/homebrew-tools/archive/refs/tags/v1.1.0.tar.gz -o v1.1.0.tar.gz
 
    # Calculate SHA256
-   sha256=$(shasum -a 256 v1.1.0.tar.gz | cut -d' ' -f1)
+   shasum -a 256 v1.1.0.tar.gz
 
-   # Update the Formula with new version and SHA256
-   sed -i '' "s/version \".*\"/version \"1.1.0\"/" Formula/diet-mov.rb
-   sed -i '' "s/sha256 \".*\"/sha256 \"$sha256\"/" Formula/diet-mov.rb
+   # Update the Formula with new SHA256
+   # Open Formula/diet-mov.rb and manually update these lines:
+   # 2. Update the sha256 to the new hash value
+   #
+   # Example:
+   # sha256 "9fc5963..."  # Change from old to new hash
 
    # Clean up
    rm v1.1.0.tar.gz
    ```
 
-5. Update the formula:
-   ```bash
-   brew bump-formula-pr --version=1.1.0 diet-mov
-   ```
 
 ### Testing Changes
 

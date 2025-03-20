@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.3"
+VERSION="1.1.4"
 FORCE=0
 
 # Show version
@@ -40,7 +40,7 @@ if ! find "$directory" -type f -name "*.mov" -print -quit | grep -q .; then
 fi
 
 # Process each MOV file, handling spaces in filenames correctly
-find "$directory" -type f -name "*.mov" -print0 | while IFS= read -r -d '' mov_file; do
+while IFS= read -r mov_file; do
   output_file="${mov_file%.mov}.gif"
 
   # Check if output file exists and handle accordingly
@@ -52,6 +52,6 @@ find "$directory" -type f -name "*.mov" -print0 | while IFS= read -r -d '' mov_f
   # Convert to animated GIF with specified frame rate
   ffmpeg -y -loglevel error -i "$mov_file" -vf "fps=$fps" -f gif "$output_file"
   echo "Conversion completed: $mov_file → $output_file (fps: $fps)"
-done
+done < <(find "$directory" -type f -name "*.mov")
 
 echo "All MOV files have been converted to animated GIF successfully with $fps fps."

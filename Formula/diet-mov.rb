@@ -1,4 +1,4 @@
-class ConvertMovToPng < Formula
+class DietMov < Formula
   desc "Tools for small things"
   homepage ""
   url "https://github.com/andgohq/homebrew-tools/archive/refs/tags/1.0.1.tar.gz"
@@ -9,6 +9,6 @@ class ConvertMovToPng < Formula
   depends_on "ffmpeg"
 
   def install
-    bin.install "bin/convert_mov_to_png.sh" => "convert-mov-to-png"
+    bin.install "bin/diet_mov.sh" => "diet-mov"
   end
 end

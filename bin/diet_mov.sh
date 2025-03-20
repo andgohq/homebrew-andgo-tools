@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.7"
+VERSION="1.1.8"
 FORCE=0
 ERROR_COUNT=0
 
@@ -49,7 +49,7 @@ echo
 
 # Process each MOV file, handling spaces in filenames correctly
 ERROR_COUNT=0
-IFS=$'\n' while read -r mov_file; do
+IFS=$'\n' find "$directory" -type f -name "*.mov" | while read -r mov_file; do
   output_file="${mov_file%.mov}.gif"
 
   # Check if output file exists and handle accordingly
@@ -66,7 +66,7 @@ IFS=$'\n' while read -r mov_file; do
     echo "Error: Failed to convert $mov_file"
     ERROR_COUNT=$((ERROR_COUNT + 1))
   fi
-done < <(find "$directory" -type f -name "*.mov")
+done
 
 if [ $ERROR_COUNT -eq 0 ]; then
   echo "All MOV files have been converted to animated GIF successfully with $fps fps."

@@ -23,12 +23,14 @@ brew install diet-mov
 ```bash
 diet-mov <directory> [fps]
 diet-mov -v, --version    # Show version
+diet-mov -f              # Force overwrite existing files
 ```
 
 **Arguments:**
 - `directory`: Directory containing MOV files to convert
 - `fps`: Frame rate for the output animated GIF (default: 2)
 - `-v, --version`: Display version information
+- `-f`: Force overwrite existing GIF files
 
 **Examples:**
 ```bash
@@ -36,6 +38,8 @@ diet-mov ./videos              # Convert with default 2 fps
 diet-mov ./videos 5            # Convert with 5 fps
 diet-mov /path/to/videos 10    # Convert with 10 fps
 diet-mov -v                    # Show version
+diet-mov -f ./videos          # Force overwrite existing files
+diet-mov -f ./videos 5        # Force overwrite with 5 fps
 ```
 
 ## Requirements
@@ -57,21 +61,14 @@ diet-mov -v                    # Show version
 
 ### Updating Formula
 
-1. Update the version in `Formula/diet-mov.rb` and `bin/diet_mov.sh`:
+1. Update the version in `Formula/diet-mov.rb`:
    ```ruby
    version "1.1.0"  # Update this version number
    ```
 
-   ```bash
-   VERSION="1.1.0"
-   ```
-
 2. Create a new tag and push it:
    ```bash
-   git add .
-   git commit -m "Release v1.1.0"
    git tag -a v1.1.0 -m "Release v1.1.0"  # Use the same version number
-   git push origin main
    git push origin v1.1.0
    ```
 
@@ -103,10 +100,18 @@ diet-mov -v                    # Show version
 
 5. Commit and push the changes:
    ```bash
-   git add Formula/diet-mov.rb
+   git add .
    git commit -m "Update diet-mov to v1.1.0"
    git push origin main
    ```
+6. Use new version
+  ```bash
+  brew uninstall diet-mov
+  brew untap andgohq/tools
+  brew tap andgohq/tools
+  brew install diet-mov
+  ```
+
 
 ### Testing Changes
 
